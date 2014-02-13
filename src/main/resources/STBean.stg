@@ -1,0 +1,39 @@
+STBeanFactory(TemplateGroupName, BeanClass) ::= <<
+public class <TemplateGroupName> {
+    STGroup g;
+
+    public <TemplateGroupName>(STGroup g) {
+        this.g = g;
+    }
+}
+>>
+
+STBean(Package, BeanClass, TemplateName, Accessor) ::= <<
+package <Package>;
+import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
+
+// needs a base class?
+public class <BeanClass> {
+    ST st = null;
+    public static final String templateName = "<TemplateName>";
+
+    public <BeanClass>(STGroup g) {
+        st = g.getInstanceOf("<TemplateName>");
+    }
+
+    public ST getST() {
+        return st;
+    }
+
+    <Accessor; separator="\n">
+}
+>>
+
+STAccessor(BeanClass, MethodName, ParamName) ::= <<
+public <BeanClass> add<MethodName>(Object val) {
+    st.add("<ParamName>", val);
+    return this;
+}
+>>
+
