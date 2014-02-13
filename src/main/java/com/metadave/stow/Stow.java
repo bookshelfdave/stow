@@ -24,7 +24,7 @@ public class Stow {
     public static void generateObjects(String groupFile, String classPackage, String dest) {
 
         StowSTGroupFile stg = new StowSTGroupFile(groupFile);
-        STGroup outputGroup = new STGroupFile("STBean.stg");
+        STGroup outputGroup = new STGroupFile("Stow.stg");
         Map<String, CompiledST> ts = stg.getTemplates();
         for(String s: ts.keySet()) {
             CompiledST t = ts.get(s);
@@ -66,7 +66,8 @@ public class Stow {
         System.out.println("Finished!");
     }
     public static void main(String args[]) {
-
+        // TODO: from Maven
+        // http://mojo.codehaus.org/exec-maven-plugin/examples/example-exec-for-java-programs.html
         CommandLineParser parser = new BasicParser();
 
         Options options = new Options();
