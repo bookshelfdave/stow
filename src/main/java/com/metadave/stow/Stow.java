@@ -29,26 +29,29 @@ public class Stow {
         }
 
         Set<String> templateNames = new HashSet<String>();
-
-
         StowSTGroupFile stg = new StowSTGroupFile(groupFile);
         STGroup outputGroup = new STGroupFile("Stow.stg");
         Map<String, CompiledST> ts = stg.getTemplates();
+        int i = 1;
         for(String s: ts.keySet()) {
             CompiledST t = ts.get(s);
             if(t.isAnonSubtemplate) {
                 continue;
             }
+            String templateId;
+
             if(!templateNames.contains(t.name.toUpperCase())) {
                 templateNames.add(t.name.toUpperCase());
+                templateId = t.name;
             } else {
-                System.out.println("Skipping " + t.name);
-                continue;
+                System.out.println("Adding a unique id to " + t.name);
+                templateId = t.name + i;
             }
+
             ST bean = outputGroup.getInstanceOf("STBean");
             bean.add("Package", classPackage);
             bean.add("TemplateName", t.name);
-            String className = classPrefix + t.name;
+            String className = classPrefix + templateId;
             bean.add("BeanClass", className);
             if(t.hasFormalArgs) {
                 Map<String, FormalArgument> fas = t.formalArguments;
