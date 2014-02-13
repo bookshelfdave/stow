@@ -9,7 +9,9 @@ import org.stringtemplate.v4.compiler.CompiledST;
 import org.stringtemplate.v4.compiler.FormalArgument;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Stow {
 
@@ -21,7 +23,13 @@ public class Stow {
     }
 
 
-    public static void generateObjects(String groupFile, String classPackage, String dest) {
+    public static void generateObjects(String groupFile, String classPackage, String classPrefix, String dest) {
+        if(classPrefix == null) {
+            classPrefix = "";
+        }
+
+        Set<String> templateNames = new HashSet<String>();
+
 
         StowSTGroupFile stg = new StowSTGroupFile(groupFile);
         STGroup outputGroup = new STGroupFile("Stow.stg");
@@ -31,10 +39,17 @@ public class Stow {
             if(t.isAnonSubtemplate) {
                 continue;
             }
+            if(!templateNames.contains(t.name.toUpperCase())) {
+                templateNames.add(t.name.toUpperCase());
+            } else {
+                System.out.println("Skipping " + t.name);
+                continue;
+            }
             ST bean = outputGroup.getInstanceOf("STBean");
             bean.add("Package", classPackage);
             bean.add("TemplateName", t.name);
-            bean.add("BeanClass", getNiceName(t.name));
+            String className = classPrefix + t.name;
+            bean.add("BeanClass", className);
             if(t.hasFormalArgs) {
                 Map<String, FormalArgument> fas = t.formalArguments;
                 if(fas != null) {
@@ -42,17 +57,16 @@ public class Stow {
                         FormalArgument f = fas.get(fa);
 
                         ST acc = outputGroup.getInstanceOf("STAccessor");
-                        acc.add("BeanClass", getNiceName(t.name));
+                        acc.add("BeanClass", className);
                         acc.add("MethodName",getNiceName(f.name));
                         acc.add("ParamName",f.name);
-
                         bean.add("Accessor", acc);
                         //System.out.println(f.name + ":" + f.index);
                     }
                 }
             }
 
-            String outputFileName = dest + File.separator + getNiceName(t.name) + ".java";
+            String outputFileName = dest + File.separator + className + ".java";
             System.out.println("Generating " + outputFileName);
             File f = new File(outputFileName);
 
@@ -83,15 +97,15 @@ public class Stow {
         Option stgFile =  new Option("stg", "StringTemplate4 group file");
         stgFile.setArgs(1);
 
-        //Option classPrefix =  new Option("class_prefix", "Prefix to use for generated classes");
-        //classPrefix.setArgs(1);
+        Option classPrefix =  new Option("class_prefix", "Prefix to use for generated classes");
+        classPrefix.setArgs(1);
 
         //destDir.setRequired(true);
 
         options.addOption(javaPackage);
         options.addOption(destDir);
         options.addOption(stgFile);
-        //options.addOption(classPrefix);
+        options.addOption(classPrefix);
 
         try {
             CommandLine line = parser.parse(options, args);
@@ -99,7 +113,9 @@ public class Stow {
             if(line.hasOption("java_package") && line.hasOption("dest") && line.hasOption("stg")) {
                 generateObjects(line.getOptionValue("stg"),
                                 line.getOptionValue("java_package"),
-                                line.getOptionValue("dest"));
+                                line.hasOption("class_prefix") ? line.getOptionValue("class_prefix") : "",
+                                line.getOptionValue("dest")
+                                );
             } else {
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp("stow", options);
