@@ -12,9 +12,10 @@ STBean(Package, BeanClass, TemplateName, Accessor) ::= <<
 package <Package>;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
+import com.metadave.stow.AbstractStow;
 
 // needs a base class?
-public class <BeanClass> {
+public class <BeanClass> implements AbstractStow {
     ST st = null;
     public static final String templateName = "<TemplateName>";
 
@@ -31,6 +32,12 @@ public class <BeanClass> {
 >>
 
 STAccessor(BeanClass, MethodName, ParamName) ::= <<
+
+public <BeanClass> add<MethodName>(AbstractStow val) {
+    st.add("<ParamName>", val.getST());
+    return this;
+}
+
 public <BeanClass> add<MethodName>(Object val) {
     st.add("<ParamName>", val);
     return this;
