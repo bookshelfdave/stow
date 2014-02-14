@@ -27,6 +27,51 @@ parameter problems at compile time:
 </dependency>
 ```
 
+### Integration with Maven
+
+This needs some cleanup, it seems like my IDE picks up the generated classes
+but Maven doesn't. 
+
+Change the arguments `-java_package`, `-class_prefix`, `-dest`, and `-stg` in the monsterous snippet of XML below:
+
+```
+  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <id>RunStow</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>com.metadave.stow.Stow</argument>
+
+                        <argument>-java_package</argument>
+                            <argument>com.foo.bar</argument>
+                        <argument>-class_prefix</argument>
+                            <argument>My</argument>
+                        <argument>-dest</argument>
+                            <argument>${project.build.sourceDirectory}/com/foo/bar</argument>
+                        <argument>-stg</argument>
+                            <argument>${project.build.sourceDirectory}/../resources/Foo.stg</argument>
+
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+```
 
 
 ### Contributing

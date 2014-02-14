@@ -23,6 +23,7 @@ package com.metadave.stow;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
@@ -30,6 +31,10 @@ import org.stringtemplate.v4.compiler.CompiledST;
 import org.stringtemplate.v4.compiler.FormalArgument;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -51,7 +56,22 @@ public class Stow {
 
         Set<String> templateNames = new HashSet<String>();
         StowSTGroupFile stg = new StowSTGroupFile(groupFile);
-        STGroup outputGroup = new STGroupFile("Stow.stg");
+        URL url = new Object().getClass().getResource("/Stow.stg");
+
+        StringWriter writer = new StringWriter();
+        STGroup outputGroup = null;
+        try {
+            File outputFile = File.createTempFile("Stow", ".stg");
+            FileUtils.copyURLToFile(url, outputFile);
+            outputGroup = new STGroupFile(outputFile.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(outputGroup == null) {
+            throw new RuntimeException("Unable to find Stow.stg");
+        }
+
         Map<String, CompiledST> ts = stg.getTemplates();
         int i = 1;
         for(String s: ts.keySet()) {
@@ -69,7 +89,7 @@ public class Stow {
                 templateId = t.name + i;
             }
 
-            STOWSTBean bean = new STOWSTBean(stg);
+            STOWSTBean bean = new STOWSTBean(outputGroup);
             bean.addPackage(classPackage);
             bean.addTemplateName(t.name);
             String className = classPrefix + templateId;
@@ -79,7 +99,7 @@ public class Stow {
                 if(fas != null) {
                     for(String fa: fas.keySet()) {
                         FormalArgument f = fas.get(fa);
-                        STOWSTAccessor acc = new STOWSTAccessor(stg);
+                        STOWSTAccessor acc = new STOWSTAccessor(outputGroup);
                         acc.addBeanClass(className);
                         acc.addMethodName(getNiceName(f.name));
                         acc.addParamName(f.name);
