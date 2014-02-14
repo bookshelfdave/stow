@@ -9,7 +9,7 @@ Stow
 
 ### What is it?
 
-Stow generates Java wrapper classes for StringTemplate4 template groups. This allows you to easy access
+Stow generates Java wrapper classes for StringTemplate4 template groups. This allows you to easily access
 your templates by *method* instead of using a String keys, and will also catch certain template
 parameter problems at compile time:
 
