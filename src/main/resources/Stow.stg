@@ -1,13 +1,3 @@
-STBeanFactory(TemplateGroupName, BeanClass) ::= <<
-public class <TemplateGroupName> {
-    STGroup g;
-
-    public <TemplateGroupName>(STGroup g) {
-        this.g = g;
-    }
-}
->>
-
 STBean(Package, BeanClass, TemplateName, Accessor) ::= <<
 package <Package>;
 import org.stringtemplate.v4.ST;
