@@ -56,21 +56,7 @@ public class Stow {
 
         Set<String> templateNames = new HashSet<String>();
         StowSTGroupFile stg = new StowSTGroupFile(groupFile);
-        URL url = new Object().getClass().getResource("/Stow.stg");
-
-        StringWriter writer = new StringWriter();
-        STGroup outputGroup = null;
-        try {
-            File outputFile = File.createTempFile("Stow", ".stg");
-            FileUtils.copyURLToFile(url, outputFile);
-            outputGroup = new STGroupFile(outputFile.getAbsolutePath());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if(outputGroup == null) {
-            throw new RuntimeException("Unable to find Stow.stg");
-        }
+        STGroup outputGroup = new STGroupFile("Stow.stg");
 
         Map<String, CompiledST> ts = stg.getTemplates();
         int i = 1;
