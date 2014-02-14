@@ -4,7 +4,7 @@ Stow
 
 **StringTemplate4 Object WLibrary (silent W)**
 
-* (the W thing is a joke)
+* (the W is a joke)
 
 
 ### What is it?
