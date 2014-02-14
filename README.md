@@ -10,7 +10,7 @@ Stow is © Copyright Dave Parfitt 2014
 ### What is it?
 
 Stow generates Java wrapper classes for StringTemplate4 template groups. This allows you to easily access
-your templates by *method* instead of using a String keys, and will also catch certain template
+your templates by *method* instead of using String based keys, and will also catch certain template
 parameter problems at compile time:
 
   - renamed parameters
