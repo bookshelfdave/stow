@@ -84,7 +84,7 @@ FancyName(Name) ::= &lt;&lt;
 <li>-class_prefix Demo</li>
 <li>-dest /path/to/some_directory</li>
 <li>-stg resources/Greeting.stg</li>
-</ul><p>Generates:</p>
+</ul><p>which generates:</p>
 
 <pre>package com.foo.bar;
 import org.stringtemplate.v4.ST;
@@ -160,7 +160,7 @@ public class DemoFancyName implements AbstractStow {
 }
 </pre>
 
-<p>The snippet of code below shows how easy it is to use the generated code:</p>
+<p>The snippet of code below shows basic usage of the generated code:</p>
 
 <pre>STGroup stg = new STGroupFile("Greeting.stg");
 
