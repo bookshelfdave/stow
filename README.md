@@ -54,7 +54,7 @@ Run stow with the following parameters:
 
 
 
-Generates:
+which generates:
 
 
 <pre style="background:#fff;color:#000"><span style="color:#ff5600">package</span> <span style="color:#ff5600">com.foo.bar</span>;
@@ -132,7 +132,7 @@ and
 </pre>
 
 
-The snippet of code below shows how easy it is to use the generated code:
+The snippet of code below shows basic usage of the generated code:
 
 
 <pre style="background:#fff;color:#000"><span style="color:#ff5600">STGroup</span> stg <span style="color:#ff5600">=</span> <span style="color:#ff5600">new</span> <span style="color:#ff5600">STGroupFile</span>(<span style="color:#00a33f">"Greeting.stg"</span>);
