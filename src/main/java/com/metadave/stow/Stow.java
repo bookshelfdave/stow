@@ -108,8 +108,10 @@ public class Stow {
         System.out.println("Finished!");
     }
     public static void main(String args[]) {
-        // TODO: from Maven
-        // http://mojo.codehaus.org/exec-maven-plugin/examples/example-exec-for-java-programs.html
+        System.out.println("Stow: StringTemplate Object Wrapper");
+        System.out.println("(C) 2014 Dave Parfitt");
+        System.out.println("Stow uses the Apache 2 license");
+
         CommandLineParser parser = new BasicParser();
 
         Options options = new Options();
