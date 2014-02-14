@@ -1,6 +1,11 @@
-## STOw - StringTemplate4 Object WLibrary (silent W?)
+## Stow
 
-====
+===
+
+**StringTemplate4 Object WLibrary (silent W)**
+
+* (the W thing is a joke)
+
 
 ### What is it?
 
