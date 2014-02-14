@@ -2,9 +2,7 @@ Stow
 
 ===
 
-**StringTemplate4 Object WLibrary (silent W)**
-
-* (the W is a joke)
+**StringTemplate4 Object Wrapper
 
 
 ### What is it?
