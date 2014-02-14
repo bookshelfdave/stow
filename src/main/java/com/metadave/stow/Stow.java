@@ -69,23 +69,21 @@ public class Stow {
                 templateId = t.name + i;
             }
 
-            ST bean = outputGroup.getInstanceOf("STBean");
-            bean.add("Package", classPackage);
-            bean.add("TemplateName", t.name);
+            STOWSTBean bean = new STOWSTBean(stg);
+            bean.addPackage(classPackage);
+            bean.addTemplateName(t.name);
             String className = classPrefix + templateId;
-            bean.add("BeanClass", className);
+            bean.addBeanClass(className);
             if(t.hasFormalArgs) {
                 Map<String, FormalArgument> fas = t.formalArguments;
                 if(fas != null) {
                     for(String fa: fas.keySet()) {
                         FormalArgument f = fas.get(fa);
-
-                        ST acc = outputGroup.getInstanceOf("STAccessor");
-                        acc.add("BeanClass", className);
-                        acc.add("MethodName",getNiceName(f.name));
-                        acc.add("ParamName",f.name);
-                        bean.add("Accessor", acc);
-                        //System.out.println(f.name + ":" + f.index);
+                        STOWSTAccessor acc = new STOWSTAccessor(stg);
+                        acc.addBeanClass(className);
+                        acc.addMethodName(getNiceName(f.name));
+                        acc.addParamName(f.name);
+                        bean.addAccessor(acc);
                     }
                 }
             }
@@ -95,7 +93,7 @@ public class Stow {
             File f = new File(outputFileName);
 
             try {
-                FileUtils.writeStringToFile(f, bean.render());
+                FileUtils.writeStringToFile(f, bean.getST().render());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -145,8 +143,10 @@ public class Stow {
                 formatter.printHelp("stow", options);
             }
         }
-        catch( ParseException exp ) {
-            System.out.println( "Unexpected exception:" + exp.getMessage() );
+        catch(ParseException exp) {
+            System.out.println("Error parsing stow command line:" + exp.getMessage() );
         }
     }
+
+
 }
