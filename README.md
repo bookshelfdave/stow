@@ -20,7 +20,11 @@ parameter problems at compile time:
 ### Installing
 
 ```
-mvn compile install
+<dependency>
+  <groupId>com.github.metadave</groupId>
+  <artifactId>Stow</artifactId>
+  <version>0.1-SNAPSHOT</version>
+</dependency>
 ```
 
 

@@ -36,7 +36,7 @@ import java.util.Set;
 
 public class Stow {
 
-    public static String getNiceName(String id) {
+    static String getNiceName(String id) {
         if(id == null || id.length() == 0) {
             return "";
         }
