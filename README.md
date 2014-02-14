@@ -1,6 +1,8 @@
 Stow
 ===
 
+[![Build Status](https://travis-ci.org/metadave/stow.png)](https://travis-ci.org/metadave/stow)
+
 [StringTemplate 4](http://www.stringtemplate.org/) Object Wrapper
 
 StringTemplate is © Copyright StringTemplate / Terence Parr 2014
