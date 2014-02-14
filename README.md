@@ -1,8 +1,7 @@
 Stow
-
 ===
 
-**StringTemplate4 Object Wrapper
+StringTemplate4 Object Wrapper
 
 
 ### What is it?
